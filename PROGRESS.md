@@ -12,6 +12,7 @@
 
 ## M2: Extensibility
 
+- [ ] User skills
 - [ ] Additional model providers
 - [ ] Permission-controlled tools
 - [ ] Inbound and outbound MCP
