@@ -1,0 +1,9 @@
+node_modules/
+.next/
+*.tsbuildinfo
+.gradle/
+.kotlin/
+build/
+.env*
+!.env.example
+.DS_Store
