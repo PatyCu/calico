@@ -7,6 +7,13 @@
 - Browser requests use the Next.js origin. `BACKEND_URL` is server-only configuration, never request input.
 - Upstream health requests reject redirects. Health requests have timeouts, bypass caches, and return generic errors without backend details.
 
+## Local message boundary
+
+- Messaging uses the same unauthenticated loopback-only development boundary; there is no user identity, shared storage, or tenant data. Network exposure requires the approved security design above.
+- Both message endpoints accept only nonblank strings up to 2,000 characters. The UI allows one pending request at a time.
+- Messages and replies remain transient, with no persistence or content logging. Replies render as text. No content audit is recorded for this local echo.
+- The only outbound message destination is the server-configured backend. Requests reject redirects and use timeouts; failures return generic errors. No external provider or tool executes.
+
 ## Requirements for changes
 
 - Never commit secrets or log credentials or content. Keep secrets server-side.

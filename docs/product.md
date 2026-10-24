@@ -4,7 +4,7 @@ Calico is an AI workspace, beginning with conversations. See [PROGRESS](../PROGR
 
 ## Current capabilities
 
-The New Conversation screen has a disabled composer, backend connectivity status, and manual retry. Appearance supports Light, Dark, and System.
+The New Conversation screen sends a sentence to the backend and displays its echo reply. It supports a waiting state and retry after errors, plus backend connectivity status and manual connection checks. Messages are not saved. Appearance supports Light, Dark, and System.
 
 ## Planned scope
 

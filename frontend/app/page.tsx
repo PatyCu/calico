@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
+import { MessageComposer } from "./message-composer";
 
 type Connection = "checking" | "connected" | "error";
 
@@ -58,12 +59,7 @@ export default function NewConversation() {
         <p className="eyebrow">Your workspace</p>
         <h1>New Conversation</h1>
         <p className="intro">A space to think, explore, and create.</p>
-        <section className="empty-state" aria-labelledby="empty-title">
-          <h2 id="empty-title">Your conversation starts here</h2>
-          <p>Messaging will arrive in a future update.</p>
-          <textarea aria-label="Message" placeholder="What would you like to explore?" disabled rows={3} />
-          <div className="composer-footer"><span>Messaging coming soon</span><button disabled>Send</button></div>
-        </section>
+        <MessageComposer />
         <div className="connection">
           <p role="status" aria-live="polite"><span className={`dot ${connection}`} aria-hidden="true" />{label}</p>
           <button className="retry" onClick={() => { setConnection("checking"); void checkConnection(); }} disabled={connection === "checking"}>Check again</button>

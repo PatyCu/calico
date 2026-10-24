@@ -3,6 +3,7 @@
 - [x] Local foundation
 - [x] Documentation cleanup and scoped agent instructions
 - [ ] First AI conversation
+  - [x] Send a sentence from the UI and display the backend echo reply
 - [ ] Conversation history
 - [ ] Agent runtime and internal tools
 - [ ] Basic artifacts and library (current content only)
