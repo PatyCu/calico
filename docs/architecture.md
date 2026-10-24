@@ -1,22 +1,19 @@
 # Architecture
 
-Decision: a modular monolith backend with a separate Next.js frontend. Start with one backend application; introduce domain packages and explicit APIs as actual features arrive. No distributed services or speculative infrastructure.
+A separate Next.js frontend connects to one Kotlin/Spring Boot backend. Backend domains gain explicit APIs as features are added; do not create empty modules. See [backend structure](decisions/0001-modular-monolith.md) and [technology choice](decisions/0002-kotlin-backend.md).
 
-## Implemented slice
+## Connectivity
 
 Browser → Next.js `/api/health` → Spring Boot `GET /health` → `{"status":"UP"}`.
 
-The browser shows checking, connected, or error and supports manual retry. Next.js owns a server-only BACKEND_URL (default loopback), checks response status/body, disables caching, and bounds upstream calls to three seconds. The browser bounds calls to five seconds. An unsuccessful or malformed upstream response becomes a generic HTTP 503. No CORS configuration is needed for the same-origin browser request.
+Checks run on page load and manual retry. The browser timeout is five seconds; the upstream timeout is three seconds. Next.js validates the upstream status and body and returns HTTP 503 on failure. See [security](security.md) for trust boundaries.
 
-## Planned boundaries, not implemented
+## Appearance
 
-- Providers: start with OpenAI later; keep a thin internal request/event contract plus capability discovery. Translate provider-specific types at adapters so another provider does not require restructuring consumers. Avoid a universal LLM framework.
-- Tools: explicit tool contracts should accommodate inbound and outbound MCP adapters later. Authorization and trust boundaries apply regardless of transport.
-- Agent runtime, conversations, artifacts, and connectors gain domain boundaries when their slices are approved.
-- MVP artifacts will hold current content only. Artifact versioning is explicitly outside the MVP.
+Semantic CSS tokens define light and dark themes. System is the default. A static script applies the saved theme before paint; CSS follows system changes. The `calico-theme` localStorage entry stores the preference, with an in-memory fallback when storage is blocked. Fonts are served locally; icons use inline SVG.
 
-Security applies to every boundary from the outset; see security.md. Each slice requires automated and human validation before proceeding.
+## Future boundaries
 
-## Presentation
-
-The frontend uses shared semantic CSS tokens for Calico's cool neutral palette, restrained copper accents, and separate status colors. Both light and dark themes are supported. System appearance is the default; a Light / Dark / System control persists only the appearance preference in localStorage, with an in-memory fallback if storage is blocked. A small static script applies saved appearance before paint; CSS follows system changes automatically. No theme library or backend storage is needed. Geist is served locally with its font license; outline icons are inline SVG so no icon package is required.
+- Providers: begin with OpenAI behind a thin adapter. Keep provider types behind internal request/event contracts and capability discovery.
+- Tools: explicit contracts must support inbound and outbound MCP adapters.
+- Conversations, agent runtime, artifacts, and connectors gain domain boundaries when implemented.

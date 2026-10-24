@@ -2,8 +2,14 @@
 
 Status: accepted.
 
-Context: Kotlin is the agreed backend language; the first slice needs a small HTTP server and automated validation.
+## Context
 
-Decision: Kotlin with Spring Boot and a Gradle Kotlin DSL build, using JDK 21 and a checked-in Gradle wrapper. Add only web/JSON dependencies and test support for this slice.
+Kotlin is the agreed backend language. The initial feature needs HTTP and automated tests.
 
-Consequences: familiar HTTP and test infrastructure, one JVM process locally, no database or external service requirements. Persistence technology remains undecided until an approved persistence slice.
+## Decision
+
+Use Kotlin, Spring Boot, JDK 21, Gradle Kotlin DSL, and a checked-in Gradle wrapper. Initially include only web/JSON dependencies and test support.
+
+## Consequences
+
+The backend uses one JVM process and requires no external services. Choose persistence technology when implementing persistence.

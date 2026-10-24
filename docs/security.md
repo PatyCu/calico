@@ -1,11 +1,16 @@
 # Security
 
-Security is a first-class design constraint, revisited in every slice.
+## Current boundaries
 
-Current surface: a read-only public health response containing only status. Both development servers bind to loopback. Browser requests use the Next.js origin; the backend URL is server-only configuration, never request input. Fetches have timeouts, reject redirects upstream, avoid caches, and return generic failures without exposing backend details. There is no user input processing or model/tool execution.
+- Development servers bind to loopback; the app has no authentication. Deployment or network exposure requires an approved security design.
+- Health returns process availability only. It does not establish readiness.
+- Browser requests use the Next.js origin. `BACKEND_URL` is server-only configuration, never request input.
+- Upstream health requests reject redirects. Health requests have timeouts, bypass caches, and return generic errors without backend details.
 
-No authentication is implemented. This skeleton is for local validation; deployment and exposure require a separately approved security design. Health indicates process availability, not comprehensive readiness.
+## Requirements for changes
 
-Never commit secrets or log credentials/content. Local env files and build outputs are ignored; dependency lockfiles/wrapper belong in source control. Review dependency updates and known vulnerabilities.
-
-Before future capabilities: define identity and authorization, validate inputs, limit request sizes/rates, isolate tenant data, and define retention and audit rules. Treat model output, retrieved content, and MCP data as untrusted. Tool permissions must be explicit and enforceable; outbound destinations and inbound callers need trust policies. Secrets stay server-side. Threat model each provider, storage, and MCP boundary before implementing it.
+- Never commit secrets or log credentials or content. Keep secrets server-side.
+- Keep local environment files and build outputs ignored; commit lockfiles and the Gradle wrapper. Review dependencies for known vulnerabilities.
+- Before adding capabilities, define identity, authorization, input validation, request limits, tenant isolation, retention, and audit rules.
+- Treat model output, retrieved content, and MCP data as untrusted. Enforce explicit tool permissions; never allow unrestricted tool execution.
+- Define allowed outbound destinations and trusted inbound callers. Threat-model each provider, storage, and MCP boundary before implementation.

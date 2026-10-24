@@ -1,6 +1,7 @@
 ## M1: MVP
 
 - [x] Local foundation (automated and human validation complete)
+- [x] Documentation cleanup and scoped agent instructions (automated checks and human validation complete)
 - [ ] First AI conversation
 - [ ] Conversation history
 - [ ] Agent runtime and internal tools
